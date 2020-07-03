@@ -10,10 +10,10 @@
           <v-row>
             <v-col v-for="(data,index) in category" :key="index">
               <v-card outlined :class="cardColor[index]">
-                <v-img>
+                <v-card-title :class="textColor[index]">{{casesTally[index]}}</v-card-title>
                   <v-card-subtitle class="overline pt-0" :class="textColor[index]">{{data}}</v-card-subtitle>
-                  <v-card-title :class="textColor[index]">{{casesTally[index]}}</v-card-title>
-                </v-img>
+                  
+                
               </v-card>
             </v-col>
           </v-row>
@@ -108,7 +108,7 @@ export default {
       for (let iterator in this.caseTimeSeries) {
         dateLabel.push(this.caseTimeSeries[iterator].date);
         positiveCount.push(
-          Number(this.caseTimeSeries[iterator].totalconfirmed)
+          Number(this.caseTimeSeries[iterator].totalconfirmed/1000)
         );
         //positiveCount.push(Number(this.caseTimeSeries[iterator].dailyconfirmed));
         recoveredCount.push(
@@ -123,6 +123,9 @@ export default {
         );
       }
       this.dateLabel = dateLabel;
+      var mov=moment();
+    //  let str = moment(dateLabel[0],'mm')
+     console.log(str)
       //console.log(positiveCount)
       return [positiveCount, activeCount, recoveredCount, deceasedCount];
       // return [positiveCount.slice(100,positiveCount.length-1),activeCount,recoveredCount,deceasedCount,dateLabel];

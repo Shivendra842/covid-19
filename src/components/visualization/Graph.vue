@@ -1,7 +1,7 @@
 <template>
   <div>
-    <div>
-      <chart :options="option" :class="color" class="mb-2"></chart>
+    <div class="chart-wrapper">
+      <chart :options="option" :class="color" class="mb-2 mr-5"></chart>
     </div>
   </div>
 </template>
@@ -44,7 +44,8 @@ export default {
             type: "value",
             splitLine: {
               show: false
-            }
+            },
+           position:'right',
           }
         ],
         series: [
@@ -52,7 +53,7 @@ export default {
             name: this.name,
             type: "line",
             smooth: true,
-            data: this.dataPoints
+            data: this.dataPoints,
           }
         ],
         color: this.color.split(" ")
@@ -76,4 +77,12 @@ export default {
 };
 </script>
 <style scoped>
+.chart-wrapper{
+  width: 100%;
+}
+
+.echarts {
+  height: 200px;
+  width: 400px;
+}
 </style>
