@@ -24,4 +24,6 @@ https://chartkick.com/vue
 
 https://echarts.apache.org/en/option.html#tooltip
 
+
 changes to the readme file
+
