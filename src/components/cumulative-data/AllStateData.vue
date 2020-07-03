@@ -6,7 +6,7 @@
       :items-per-page="10"
       :disable-pagination="true"
       hide-default-footer
-      @click:row="details($event.state)"
+      @click:row="details($event)"
       class="pointer"
     ></v-data-table>
   </div>
@@ -67,7 +67,8 @@ export default {
   },
   methods: {
     details(value) {
-      this.$router.push({name:'StateWiseData', params:{id:value}});
+      this.$store.dispatch('actionSetTally',value);
+      this.$router.push({name:'StateWiseData', params:{id:value.state}});
     }
   }
 };

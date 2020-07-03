@@ -21,9 +21,11 @@ Vue.use(VueRouter)
     component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
   },
   {
-    path:'/state/:id',
+   // path:'/state/:id',
+   path:'/state/:id',
     name:'StateWiseData',
     component:StateData,
+    //props:true
    // components:() => import(/*webpackChunkName:"StateWiseData"*/'@/views/state-wise-data/StateData.vue')
   },
 ]

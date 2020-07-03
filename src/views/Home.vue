@@ -8,22 +8,17 @@
         </v-col>
         <v-col>
           <v-row>
-            <v-col v-for="(data,index) in category" :key="index">
-              <v-card outlined :class="cardColor[index]">
-                <v-card-title :class="textColor[index]">{{casesTally[index]}}</v-card-title>
-                  <v-card-subtitle class="overline pt-0" :class="textColor[index]">{{data}}</v-card-subtitle>
-                  
-                
-              </v-card>
-            </v-col>
+      <v-col v-for="(data,index) in casesTally" :key="index">
+        <appCard :casesTally="data" :value="category[index]" />
+      </v-col>
           </v-row>
           <v-col>
-            <v-row v-for="(data,index) in visualization" :key="index">
-              <appGraph
+          <v-row v-for="(data,index) in visualization" :key="index">
+             <appGraph
                 :dataPoints="data"
                 :dateLable="dateLabel"
                 :name="category[index]"
-                :color="cardColor[index]"
+                :color="cardColor[category[index]]"
               />
             </v-row>
           </v-col>
@@ -35,13 +30,16 @@
 
 <script>
 import { timeSeriesData } from "@/service/index.js";
+import appCard from "@/components/status-card/Card.vue";
 import appGraph from "@/components/visualization/Graph.vue";
 import stateData from "@/components/cumulative-data/AllStateData.vue";
+import {category, cardColor, textColor} from "@/shared/colorScheme.js"
 export default {
   name: `AppHome`,
   components: {
     appGraph,
-    stateData
+    stateData,
+    appCard
   },
   data() {
     return {
@@ -50,14 +48,9 @@ export default {
       stateWiseData: {},
       sampleTestedTimeSeries: {},
       dateLabel: undefined,
-      category: ["confirmed", "active", "recovered", "deaths"],
-      cardColor: [
-        "red lighten-4",
-        "blue lighten-4",
-        "green lighten-4",
-        "grey lighten-4"
-      ],
-      textColor: ["red--text", "blue--text", "green--text", "grey--text"]
+      category: category,
+      cardColor: cardColor,
+      textColor: textColor
     };
   },
   async created() {
@@ -108,7 +101,7 @@ export default {
       for (let iterator in this.caseTimeSeries) {
         dateLabel.push(this.caseTimeSeries[iterator].date);
         positiveCount.push(
-          Number(this.caseTimeSeries[iterator].totalconfirmed/1000)
+          Number(this.caseTimeSeries[iterator].totalconfirmed )
         );
         //positiveCount.push(Number(this.caseTimeSeries[iterator].dailyconfirmed));
         recoveredCount.push(
@@ -123,10 +116,6 @@ export default {
         );
       }
       this.dateLabel = dateLabel;
-      var mov=moment();
-    //  let str = moment(dateLabel[0],'mm')
-     console.log(str)
-      //console.log(positiveCount)
       return [positiveCount, activeCount, recoveredCount, deceasedCount];
       // return [positiveCount.slice(100,positiveCount.length-1),activeCount,recoveredCount,deceasedCount,dateLabel];
     }
